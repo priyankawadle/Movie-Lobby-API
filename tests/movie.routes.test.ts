@@ -13,10 +13,12 @@ import Movie from '../src/models/movie.model';
 
 describe('Movie Routes Tests (with Test DB)', () => {
   before(async () => {
-    if (!process.env.MONGODB_URI) {
-      throw new Error('MONGODB_URI not defined for test environment');
+    if (!process.env.MONGODB_URI_TEST) {
+      throw new Error('MONGODB_URI_TEST not defined for test environment');
     }
-    await mongoose.connect(process.env.MONGODB_URI);
+    if (process.env.NODE_ENV === "test") {
+    await mongoose.connect(process.env.MONGODB_URI_TEST);
+    }
   });
 
   beforeEach(async () => {
